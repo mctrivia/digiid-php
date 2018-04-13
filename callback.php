@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-require_once dirname(__FILE__) . "/BitID.php";
+require_once dirname(__FILE__) . "/DigiID.php";
 require_once dirname(__FILE__) . "/DAO.php";
-$bitid = new BitID();
+$digiid = new DigiID();
 $dao = new DAO();
 
 $variables = $_POST;
@@ -30,9 +30,9 @@ if($post_data!==null) {
 
 // ALL THOSE VARIABLES HAVE TO BE SANITIZED !
 
-$signValid = $bitid->isMessageSignatureValidSafe(@$variables['address'], @$variables['signature'], @$variables['uri'], true);
-$nonce = $bitid->extractNonce($variables['uri']);
-if($signValid && $dao->checkNonce($nonce) && ($bitid->buildURI(SERVER_URL . 'callback.php', $nonce) === $variables['uri'])) {
+$signValid = $digiid->isMessageSignatureValidSafe(@$variables['address'], @$variables['signature'], @$variables['uri'], true);
+$nonce = $digiid->extractNonce($variables['uri']);
+if($signValid && $dao->checkNonce($nonce) && ($digiid->buildURI(SERVER_URL . 'callback.php', $nonce) === $variables['uri'])) {
     $dao->update($nonce, $variables['address']);
 
 

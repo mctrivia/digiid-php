@@ -18,7 +18,7 @@ session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BitID Open Protocol - Demonstration site</title>
+    <title>DigiID Open Protocol - Demonstration site</title>
 </head>
 <body>
 

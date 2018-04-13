@@ -22,11 +22,11 @@ if (extension_loaded('gmp')) {
 }
 
 /**
- * Class BitID
+ * Class DigiID
  */
-class BitID {
+class DigiID {
 
-    private $_scheme = "bitid";
+    private $_scheme = "digiid";
     private $_qrservice = "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=";
 
     private $_nonce;
@@ -59,7 +59,7 @@ class BitID {
     }
 
     /**
-     * Extract nonce from bitid url
+     * Extract nonce from digiid url
      * @param $uri
      * @return string
      */
@@ -81,7 +81,7 @@ class BitID {
     }
 
     /**
-     * Generate bitid:// url for the callback
+     * Generate digiid:// url for the callback
      * If nonce is not provided, one will be generated
      *
      * @param $callback
@@ -108,7 +108,7 @@ class BitID {
     }
 
     /**
-     * Check if a Bitcoin address is valid or not
+     * Check if a DigiByte address is valid or not
      * $testnet is optional if you're using a testnet address, by default it will use the real blockchain
      *
      * @param $address
@@ -121,7 +121,7 @@ class BitID {
         } catch(InvalidArgumentException $e) {
             return false;
         }
-        if (strlen($address) != 21 || ($address[0] != "\x0" && !$testnet) || ($address[0] != "\x6F" && $testnet)) {
+        if (strlen($address) != 21 || ($address[0] != "\x1E" AND !$testnet) || ($address[0] != "\x6F" AND $testnet)) {
             return false;
         }
         return true;
@@ -159,7 +159,7 @@ class BitID {
         // extract parameters
         $address = $this->_base58check_decode($address, $testnet);
         if (strlen($address) != 21 || ($address[0] != "\x0" && !$testnet) || ($address[0] != "\x6F" && $testnet)) {
-            throw new InvalidArgumentException('invalid Bitcoin address');
+            throw new InvalidArgumentException('invalid DigiByte address');
         }
 
         $signature = base64_decode($signature, true);
@@ -178,7 +178,7 @@ class BitID {
         $isCompressed = ($recoveryFlags & 4) != 0;
 
         // hash message, recover key
-        $messageHash = hash('sha256', hash('sha256', "\x18Bitcoin Signed Message:\n" . $this->_numToVarIntString(strlen($message)).$message, true), true);
+        $messageHash = hash('sha256', hash('sha256', "\x19DigiByte Signed Message:\n" . $this->_numToVarIntString(strlen($message)).$message, true), true);
         $pubkey = $this->_recoverPubKey($this->_bin2gmp(substr($signature, 1, 32)), $this->_bin2gmp(substr($signature, 33, 32)), $this->_bin2gmp($messageHash), $recoveryFlags, $this->_secp256k1_G);
         if ($pubkey === false) {
             throw new InvalidArgumentException('unable to recover key');
@@ -194,7 +194,7 @@ class BitID {
                 str_pad($this->_gmp2bin($point->getX()), 32, "\x00", STR_PAD_LEFT);
         }
         if(!$testnet) {
-            $derivedAddress = "\x00". hash('ripemd160', hash('sha256', $pubBinStr, true), true);
+            $derivedAddress = "\x1E". hash('ripemd160', hash('sha256', $pubBinStr, true), true);
         } else {
             $derivedAddress = "\x6F". hash('ripemd160', hash('sha256', $pubBinStr, true), true);
         }

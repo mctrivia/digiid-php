@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 // define your absolute url
-define('SERVER_URL', 'http://localhost/bitid-php/');
+define('SERVER_URL', 'http://localhost/digiid-php/');
 
 // define database credentials
 define('DB_HOST', '');
