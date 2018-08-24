@@ -42,7 +42,7 @@ if(!$result)
 <!DOCTYPE html>
 <html>
 <head>
-    <title>DigiID Open Protocol - Demonstration site</title>
+    <title>Digi-ID Open Protocol - Demonstration site</title>
 </head>
 <body>
 
@@ -50,8 +50,8 @@ if(!$result)
     <div class="tab-content">
         <div class="tab-pane">
             <div class="spacer40"></div>
-            <h3>Scan this QRcode with your DigiID enabled mobile wallet.</h3>
-            <p>You can also click on the QRcode if you have a DigiID enabled desktop wallet.
+            <h3>Scan this QRcode with your Digi-ID enabled mobile wallet.</h3>
+            <p>You can also click on the QRcode if you have a Digi-ID enabled desktop wallet, or tap on the QR Code if signing in from mobile.
             <div class="spacer20"></div>
             <a href="<?php echo $digiid_uri; ?>"><img align="center" alt="Click on QRcode to activate compatible desktop wallet" border="0" src="<?php echo $digiid->qrCode($digiid_uri); ?>" /></a>
             <div class="spacer40"></div>

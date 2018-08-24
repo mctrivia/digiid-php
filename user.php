@@ -18,7 +18,7 @@ session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>DigiID Open Protocol - Demonstration site</title>
+    <title>Digi-ID Open Protocol - Demonstration site</title>
 </head>
 <body>
 
@@ -26,7 +26,7 @@ session_start(); ?>
     <div class="tab-content">
         <div class="tab-pane">
             <div class="spacer40"></div>
-            <h3>Address that should be logged</h3>
+            <h3>Address that has logged in:</h3>
             <p><?php echo $_SESSION['user_id']; ?></p>
             <div class="spacer40"></div>
         </div>
