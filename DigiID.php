@@ -158,7 +158,7 @@ class DigiID {
     public function isMessageSignatureValid($address, $signature, $message, $testnet = false) {
         // extract parameters
         $address = $this->_base58check_decode($address, $testnet);
-        if (strlen($address) != 21 || ($address[0] != "\x0" && !$testnet) || ($address[0] != "\x6F" && $testnet)) {
+	if (strlen($address) != 21 || ($address[0] != "\x1E" && !$testnet) || ($address[0] != "\x6F" && $testnet)) {
             throw new InvalidArgumentException('invalid DigiByte address');
         }
 
