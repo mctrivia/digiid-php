@@ -64,7 +64,7 @@ if(!$result)
             </a>
 	    <a href="<?php echo $digiid_uri; ?>"><img align="center" alt="Click on QRcode to activate compatible desktop wallet" border="0" width="250" height="250" data-aos="fade" src="<?php echo $digiid->qrCode($digiid_uri); ?>" /></a>
       	
-            <img class="justify-content-center align-items-center align-content-center align-self-center visible" src="assets/img/digibytelogin3.png" data-bs-hover-animate="pulse" style="width:146px;">
+            <center><img class="justify-content-center align-items-center align-content-center align-self-center visible" src="assets/img/digibytelogin3.png" data-bs-hover-animate="pulse" style="width:146px;"></center>
             <br><br><br>
             </a>
         </form>
