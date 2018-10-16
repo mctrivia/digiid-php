@@ -62,7 +62,8 @@ if(!$result)
             <img class="justify-content-center align-items-center align-content-center align-self-center visible" src="assets/img/digibytelogin.png" width="50%" height="50%" data-bs-hover-animate="pulse" style="width:105px;">
             <br>Use the Digi-ID function of the DigiByte Wallet or Tap on the QR.<br><br>
             </a>
-            <img class="justify-content-center align-items-center align-content-center align-self-center" src="<?php echo $digiid->qrCode($digiid_uri); ?>" width="250" height="250" data-aos="fade"><a href="#" class="forgot">
+	    <a href="<?php echo $digiid_uri; ?>"><img align="center" alt="Click on QRcode to activate compatible desktop wallet" border="0" width="250" height="250" data-aos="fade" src="<?php echo $digiid->qrCode($digiid_uri); ?>" /></a>
+      	
             <img class="justify-content-center align-items-center align-content-center align-self-center visible" src="assets/img/digibytelogin3.png" data-bs-hover-animate="pulse" style="width:146px;">
             <br><br><br>
             </a>
