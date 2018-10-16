@@ -15,9 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 require_once dirname(__FILE__) . "/DAO.php";
+require_once dirname(__FILE__) . "/AidTools.php";
+
 $dao = new DAO();
 // check if this nonce is logged or not
-$address = $dao->address($_POST['nonce'], @$_SERVER['REMOTE_ADDR']);
+$address = $dao->address($_POST['nonce'], get_client_ip());
 if($address!==false) {
     // Create session so the user could log in
     session_start();
