@@ -28,12 +28,13 @@ if($post_data!==null) {
     $variables = $post_data;
 }
 
-// ALL THOSE VARIABLES HAVE TO BE SANITIZED !
 
-$signValid = $digiid->isMessageSignatureValidSafe(@$variables['address'], @$variables['signature'], @$variables['uri'], true);
+$signValid = $digiid->isMessageSignatureValidSafe(@$variables['address'], @$variables['signature'], @$variables['uri']);
+
 $nonce = $digiid->extractNonce($variables['uri']);
 if($signValid && $dao->checkNonce($nonce) && ($digiid->buildURI(SERVER_URL . 'callback.php', $nonce) === $variables['uri'])) {
-    $dao->update($nonce, $variables['address']);
+  $dao->update($nonce, $variables['address']);
+
 
 
     // SIGNED VIA PHONE WALLET (data is send as payload)
@@ -49,3 +50,4 @@ if($signValid && $dao->checkNonce($nonce) && ($digiid->buildURI(SERVER_URL . 'ca
 
 
 }
+
