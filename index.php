@@ -1,3 +1,4 @@
+
 <?php
 /*
 Copyright 2014 Daniel Esteban
@@ -15,11 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// DigiID is required for login (do not modify)
+// Open AntumID/ DigiID is required for login (do not modify)
 // DAO could be replace by your CMS/FRAMEWORK database classes
 require_once dirname(__FILE__) . "/config.php";
 require_once dirname(__FILE__) . "/DigiID.php";
 require_once dirname(__FILE__) . "/DAO.php";
+require_once dirname(__FILE__) . "/AidTools.php";
 $digiid = new DigiID();
 // generate a nonce
 $nonce = $digiid->generateNonce();
@@ -30,7 +32,7 @@ $digiid_uri = $digiid->buildURI(SERVER_URL . 'callback.php', $nonce);
 // This will only allow one nonce per IP, but it could be easily modified to allow severals per IP
 // (this is deleted after an user successfully log in the system, so only will collide if two or more users try to log in at the same time)
 $dao = new DAO();
-$result = $dao->insert($nonce, @$_SERVER['REMOTE_ADDR']);
+$result = $dao->insert($nonce, get_client_ip());
 if(!$result)
 {
 	echo "<pre>";
@@ -39,50 +41,37 @@ if(!$result)
 	die();
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>DigiID Open Protocol - Demonstration site</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Open AntumID</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-
-<div class="container">
-    <div class="tab-content">
-        <div class="tab-pane">
-            <div class="spacer40"></div>
-            <h3>Scan this QRcode with your DigiID enabled mobile wallet.</h3>
-            <p>You can also click on the QRcode if you have a DigiID enabled desktop wallet.
-            <div class="spacer20"></div>
-            <a href="<?php echo $digiid_uri; ?>"><img align="center" alt="Click on QRcode to activate compatible desktop wallet" border="0" src="<?php echo $digiid->qrCode($digiid_uri); ?>" /></a>
-            <div class="spacer40"></div>
-
-
-            <div class="spacer50"></div>
-            <h3>Manual signing</h3>
-            <p>The user experience is quite combersome, but it has the advangage of being compatible with all wallets
-                including DigiByte Core.</p>
-            <p>Please sign the challenge in the box below using the private key of this DigiByte address you want to
-                identify yourself with. Copy the text, open your wallet, choose your DigiByte address, select the sign message
-                function, paste the text into the message input and sign. After it is done, copy and paste the signature
-                into the field below.</p>
-            <p>Cumbersome. Yep. Much better with a simple scan or click using a compatible wallet :)</p>
-            <pre><?php echo $digiid_uri; ?></pre>
-            <form method="post" action="callback.php" >
-                <input type="hidden" name="uri" value="<?php echo $digiid_uri; ?>" />
-                <div class="form-group">
-                    <label>DigiByte address</label>
-                    <input type="text" name="address" id="address" class="form-control" placeholder="Enter your public DigiByte address" />
-                </div>
-                <div class="form-group">
-                    <label>Signature</label>
-                    <input type="text" name="signature" id="signature" class="form-control" placeholder="Enter the signature" />
-                </div>
-                <button type="submit" id="check" class="btn btn-success" data-loading-text="Verifying signature">Sign in !</button>
-            </form>
-            <div class="spacer40"></div>
-        </div>
+    <div class="bounce animated login-clean">
+        <form method="post">
+            <h2 class="sr-only">Open AntumID</h2>
+            <a href="#" class="forgot">
+            <img class="justify-content-center align-items-center align-content-center align-self-center visible" src="assets/img/digibytelogin.png" width="50%" height="50%" data-bs-hover-animate="pulse" style="width:105px;">
+            <br>Use the Digi-ID function of the DigiByte Wallet or Tap on the QR.<br><br>
+            </a>
+            <img class="justify-content-center align-items-center align-content-center align-self-center" src="<?php echo $digiid->qrCode($digiid_uri); ?>" width="250" height="250" data-aos="fade"><a href="#" class="forgot">
+            <img class="justify-content-center align-items-center align-content-center align-self-center visible" src="assets/img/digibytelogin3.png" data-bs-hover-animate="pulse" style="width:146px;">
+            <br><br><br>
+            </a>
+        </form>
     </div>
-</div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-animation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
 
 <script type="text/javascript">
     setInterval(function() {
@@ -98,6 +87,7 @@ if(!$result)
         r.send("nonce=<?php echo $nonce; ?>");
     }, 3000);
 </script>
+
 
 </body>
 </html>
