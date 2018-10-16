@@ -17,10 +17,10 @@ Classical password authentication is an insecure process that could be solved wi
 
 https://github.com/bitid/bitid/blob/master/BIP_draft.md
 
-Demo
-====
+Demo Full AntumID - SOAP
+========================
 
-http://vps.madriguera.me/bitid-php/ (very basic, be gentle)
+https://www.go4ict.be/DigiAntumID/ (very basic, be gentle)
 
 
 Installation
