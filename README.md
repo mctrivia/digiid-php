@@ -7,7 +7,7 @@ Based on the work of [scintill/php-bitcoin-signature-routines](https://github.co
 
 Licensed under the Apache License, Version 2.0 (unless it's not compatible with the license of works used)
 
-**DigiByte Authentication Open Protocol**
+**OpenAntumID/DigiByte Authentication Open Protocol**
 
 Pure DigiByte sites and applications shouldn’t have to rely on artificial identification methods such as usernames and passwords. DigiID is an open protocol allowing simple and secure authentication using public-key cryptography.
 
