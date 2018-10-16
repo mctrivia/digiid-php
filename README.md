@@ -19,13 +19,15 @@ https://github.com/bitid/bitid/blob/master/BIP_draft.md
 
 Demo Open AntumID
 ========================
+To use this demo you do not have to pre-register your AntumID. 
 https://www.go4ict.be/digibyte/
 
 
-Demo Full AntumID - SOAP
-========================
-
+Demo Full AntumID - Using univeral SOAP protocol
+=================================================
+To use this full demo you must first create an AntumID via www.antumid.be. When creating an AntumID you choose AntumID Lite or AntumID eID. AntumID is a full mobile identity, the authentication process is completely separate from the identification exchange. The end user has total control over privacy. AntumID SOAP is universal an can be used in all program languages. More info about AntumID SOAP contact us: support@antumid.be 
 https://www.go4ict.be/DigiAntumID/
+
 
 
 Installation
