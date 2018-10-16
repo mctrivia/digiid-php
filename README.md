@@ -1,4 +1,4 @@
-DigiID implementation in PHP
+OpenAntumID/DigiID implementation in PHP
 ===========================
 
 PHP implementation of [DigiID project/draft](https://github.com/bitid/bitid).
