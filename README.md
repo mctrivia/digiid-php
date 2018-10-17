@@ -17,6 +17,10 @@ Classical password authentication is an insecure process that could be solved wi
 
 https://github.com/bitid/bitid/blob/master/BIP_draft.md
 
+Demo AntumID Starting page
+==========================
+https://www.go4ict.be
+
 Demo Open AntumID
 ========================
 To use this demo you do not have to pre-register your AntumID. 
