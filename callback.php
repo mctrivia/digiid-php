@@ -48,6 +48,6 @@ if($signValid && $dao->checkNonce($nonce) && ($digiid->buildURI(SERVER_URL . 'ca
     }
     $data = [ 'address' => $variables['address'], 'nonce' => $nonce ];
     header('Content-Type: application/json');
-    echo json_encode($data)
+    echo json_encode($data);
 
 }
