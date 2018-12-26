@@ -16,13 +16,13 @@ limitations under the License.
 */
 
 // define your absolute url
-define('SERVER_URL', 'https://canvas.localhost.com:81/digiid/');
+define('SERVER_URL', 'https://yourdomain.com/');
 
 // define database credentials
-define('DB_HOST', 'localhost');
-define('DB_USER', 'digiid');
-define('DB_PASS', '12345678');
-define('DB_NAME', 'digiid');
+define('DB_HOST', '');
+define('DB_USER', '');
+define('DB_PASS', '');
+define('DB_NAME', '');
 
 if (DB_USER=='') {
 	echo "<h1>Please setup config.php</h1>";
