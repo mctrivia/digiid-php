@@ -30,7 +30,7 @@ if($post_data!==null) {
 
 // ALL THOSE VARIABLES HAVE TO BE SANITIZED !
 
-$signValid = $digiid->isMessageSignatureValidSafe(@$variables['address'], @$variables['signature'], @$variables['uri'], true);
+$signValid = $digiid->isMessageSignatureValidSafe(@$variables['address'], @$variables['signature'], @$variables['uri']);
 $nonce = $digiid->extractNonce($variables['uri']);
 if($signValid && $dao->checkNonce($nonce) && ($digiid->buildURI(SERVER_URL . 'callback.php', $nonce) === $variables['uri'])) {
     $dao->update($nonce, $variables['address']);
@@ -46,6 +46,8 @@ if($signValid && $dao->checkNonce($nonce) && ($digiid->buildURI(SERVER_URL . 'ca
         $_SESSION['user_id'] = $variables['address'];
         header("Location: user.php");
     }
-
+    $data = [ 'address' => $variables['address'], 'nonce' => $nonce ];
+    header('Content-Type: application/json');
+    echo json_encode($data)
 
 }

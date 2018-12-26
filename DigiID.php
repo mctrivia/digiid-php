@@ -27,7 +27,7 @@ if (extension_loaded('gmp')) {
 class DigiID {
 
     private $_scheme = "digiid";
-    private $_qrservice = "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=";
+	private $_qrservice = "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=";//DEPRICATED should use DigiQR instead
 
     private $_nonce;
     private $_callback;
@@ -71,6 +71,7 @@ class DigiID {
     }
 
     /**
+	 * DEPRICATED - Use DigiQR instead
      * Generate url for QR code
      *
      * @param $uri
@@ -109,19 +110,17 @@ class DigiID {
 
     /**
      * Check if a DigiByte address is valid or not
-     * $testnet is optional if you're using a testnet address, by default it will use the real blockchain
      *
      * @param $address
-     * @param bool $testnet
      * @return bool
      */
-    public function isAddressValid($address, $testnet = false) {
+    public function isAddressValid($address) {
         try {
-            $address = $this->_base58check_decode($address, $testnet);
+            $address = $this->_base58check_decode($address);
         } catch(InvalidArgumentException $e) {
             return false;
         }
-        if (strlen($address) != 21 || ($address[0] != "\x1E" AND !$testnet) || ($address[0] != "\x6F" AND $testnet)) {
+        if (strlen($address) != 21 || ($address[0] != "\x1E")) {
             return false;
         }
         return true;
@@ -134,12 +133,11 @@ class DigiID {
      * @param $address
      * @param $signature
      * @param $message
-     * @param bool $testnet
      * @return bool
      */
-    public function isMessageSignatureValidSafe($address, $signature, $message, $testnet = false) {
+    public function isMessageSignatureValidSafe($address, $signature, $message) {
         try {
-            return $this->isMessageSignatureValid($address, $signature, $message, $testnet);
+            return $this->isMessageSignatureValid($address, $signature, $message);
         } catch(InvalidArgumentException $e) {
             return false;
         }
@@ -151,15 +149,15 @@ class DigiID {
      * @param $address
      * @param $signature
      * @param $message
-     * @param bool $testnet
      * @return bool
      * @throws InvalidArgumentException
      */
-    public function isMessageSignatureValid($address, $signature, $message, $testnet = false) {
+    public function isMessageSignatureValid($address, $signature, $message) {
+		
         // extract parameters
-        $address = $this->_base58check_decode($address, $testnet);
-        if (strlen($address) != 21 || ($address[0] != "\x0" && !$testnet) || ($address[0] != "\x6F" && $testnet)) {
-            throw new InvalidArgumentException('invalid DigiByte address');
+        $address = $this->_base58check_decode($address);
+        if (strlen($address) != 21 || ($address[0] != "\x1E")) {		
+           throw new InvalidArgumentException('invalid DigiByte address');
         }
 
         $signature = base64_decode($signature, true);
@@ -193,11 +191,7 @@ class DigiID {
             $pubBinStr =	($this->_isBignumEven($point->getY()) ? "\x02" : "\x03") .
                 str_pad($this->_gmp2bin($point->getX()), 32, "\x00", STR_PAD_LEFT);
         }
-        if(!$testnet) {
-            $derivedAddress = "\x1E". hash('ripemd160', hash('sha256', $pubBinStr, true), true);
-        } else {
-            $derivedAddress = "\x6F". hash('ripemd160', hash('sha256', $pubBinStr, true), true);
-        }
+        $derivedAddress = "\x1E". hash('ripemd160', hash('sha256', $pubBinStr, true), true);
 
         return $address === $derivedAddress;
     }
@@ -274,11 +268,10 @@ class DigiID {
 
     /**
      * @param $str
-     * @param bool $testnet
      * @return resource|string
      * @throws InvalidArgumentException
      */
-    private function _base58check_decode($str, $testnet = false) {
+    private function _base58check_decode($str) {
         // strtr thanks to https://github.com/prusnak/addrgen/blob/master/php/addrgen.php
         // ltrim because leading zeroes can mess up the parsing even if you specify the base..
         $v = gmp_init(ltrim(strtr($str,
@@ -290,11 +283,7 @@ class DigiID {
             if ($str[$i] != '1') {
                 break;
             }
-            if(!$testnet) {
-                $v = "\x00" . $v;
-            } else {
-                $v = "\x6F" . $v;
-            }
+            $v = "\x1E" . $v;
         }
 
         $checksum = substr($v, -4);

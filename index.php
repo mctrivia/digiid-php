@@ -31,11 +31,10 @@ $digiid_uri = $digiid->buildURI(SERVER_URL . 'callback.php', $nonce);
 // (this is deleted after an user successfully log in the system, so only will collide if two or more users try to log in at the same time)
 $dao = new DAO();
 $result = $dao->insert($nonce, @$_SERVER['REMOTE_ADDR']);
-if(!$result)
-{
+if(!$result) {
 	echo "<pre>";
 	echo "Database failer\n";
-	var_dump($dao);
+//	var_dump($dao);
 	die();
 }
 ?>
@@ -53,7 +52,7 @@ if(!$result)
             <h3>Scan this QRcode with your DigiID enabled mobile wallet.</h3>
             <p>You can also click on the QRcode if you have a DigiID enabled desktop wallet.
             <div class="spacer20"></div>
-            <a href="<?php echo $digiid_uri; ?>"><img align="center" alt="Click on QRcode to activate compatible desktop wallet" border="0" src="<?php echo $digiid->qrCode($digiid_uri); ?>" /></a>
+            <a href="<?php echo $digiid_uri; ?>"><img id="loginQR" align="center" alt="Click on QRcode to activate compatible desktop wallet" border="0"></a>
             <div class="spacer40"></div>
 
 
@@ -83,8 +82,9 @@ if(!$result)
         </div>
     </div>
 </div>
-
+<script src="digiQR.min.js"></script>
 <script type="text/javascript">
+	document.getElementById("loginQR").src=DigiQR.id("<?php echo $digiid_uri; ?>",300,6,0.5);//(digiid_uri,width,logo style(0-7),radius(0.0-1.0))
     setInterval(function() {
         var r = new XMLHttpRequest();
         r.open("POST", "<?php echo SERVER_URL; ?>ajax.php", true);
